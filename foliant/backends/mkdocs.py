@@ -9,7 +9,7 @@ from foliant.backends.base import BaseBackend
 
 
 class Backend(BaseBackend):
-    targets = ('site', 'mkdocs')
+    targets = ('site', 'mkdocs', 'ghp')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -24,7 +24,7 @@ class Backend(BaseBackend):
             }
         },
 
-    def _get_command(self, mkdocs_site_path: Path) -> str:
+    def _get_build_command(self, mkdocs_site_path: Path) -> str:
         '''Generate ``mkdocs build`` command to build the site.
 
         :param mkdocs_site_path: Path to the output directory for the site
@@ -33,6 +33,14 @@ class Backend(BaseBackend):
         components = [self._mkdocs_config.get('binary_path', 'mkdocs')]
         components.append('build')
         components.append(f'-d {mkdocs_site_path}')
+
+        return ' '.join(components)
+
+    def _get_ghp_command(self) -> str:
+        '''Generate ``mkdocs gh-deploy`` command to deploy the site to GitHub Pages.'''
+
+        components = [self._mkdocs_config.get('binary_path', 'mkdocs')]
+        components.append('gh-deploy')
 
         return ' '.join(components)
 
@@ -66,7 +74,7 @@ class Backend(BaseBackend):
                     try:
                         mkdocs_site_path = Path(self._mkdocs_site_dir_name).absolute()
                         run(
-                            self._get_command(mkdocs_site_path),
+                            self._get_build_command(mkdocs_site_path),
                             shell=True,
                             check=True,
                             stdout=PIPE,
@@ -78,6 +86,26 @@ class Backend(BaseBackend):
 
                     except CalledProcessError as exception:
                         raise RuntimeError(f'Build failed: {exception.output.decode()}')
+
+                elif target == 'ghp':
+                    try:
+                        mkdocs_site_path = Path(self._mkdocs_site_dir_name).absolute()
+                        process = run(
+                            self._get_ghp_command(),
+                            shell=True,
+                            check=True,
+                            stdout=PIPE,
+                            stderr=STDOUT,
+                            cwd=mkdocs_project_path
+                        )
+                        ghp_url = process.stdout.decode().splitlines()[-1].split(': ')[-1]
+
+                        return ghp_url
+
+                    except CalledProcessError as exception:
+                        raise RuntimeError(
+                            f'GitHub Pages deploy failed: {exception.output.decode()}'
+                        )
 
                 else:
                     raise ValueError(f'MkDocs cannot make {target}')
