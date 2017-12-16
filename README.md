@@ -2,7 +2,7 @@
 
 MkDocs backend lets you build websites from Foliant projects using [MkDocs](https://mkdocs.org) static site generator.
 
-The backend adds two targets: `mkdocs` and `site`. The first one converts a Foliant project into a MkDocs project without building any html files. The second one builds a standalone website.
+The backend adds three targets: `mkdocs`, `site`, and `ghp`. The first one converts a Foliant project into a MkDocs project without building any html files. The second one builds a standalone website. The last one deploys the website to GitHub Pages.
 
 
 ## Installation
@@ -34,6 +34,17 @@ $ foliant make site -p my-project
 ✔ Making site with MkDocs
 ─────────────────────
 Result: My_Project-2017-12-04.mkdocs
+```
+
+Deploy to GitHub Pages:
+
+```shell
+$ foliant make ghp -p my-project
+✔ Parsing config
+✔ Applying preprocessor mkdocs
+✔ Making ghp with MkDocs
+─────────────────────
+Result: https://account-name.github.io/my-project/
 ```
 
 
