@@ -7,7 +7,7 @@ The backend adds three targets: `mkdocs`, `site`, and `ghp`. The first one conve
 
 ## Installation
 
-```shell
+```bash
 $ pip install foliantcontrib.mkdocs
 ```
 
@@ -16,7 +16,7 @@ $ pip install foliantcontrib.mkdocs
 
 Convert Foliant project to MkDocs:
 
-```shell
+```bash
 $ foliant make mkdocs -p my-project
 ✔ Parsing config
 ✔ Applying preprocessor mkdocs
@@ -27,7 +27,7 @@ Result: My_Project-2017-12-04.mkdocs.src
 
 Build a standalone website:
 
-```shell
+```bash
 $ foliant make site -p my-project
 ✔ Parsing config
 ✔ Applying preprocessor mkdocs
@@ -38,7 +38,7 @@ Result: My_Project-2017-12-04.mkdocs
 
 Deploy to GitHub Pages:
 
-```shell
+```bash
 $ foliant make ghp -p my-project
 ✔ Parsing config
 ✔ Applying preprocessor mkdocs
