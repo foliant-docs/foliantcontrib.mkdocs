@@ -57,7 +57,7 @@ To customize the output, use options in `backend_config.mkdocs` section:
 ```yaml
 backend_config:
   mkdocs:
-    binary_path: mkdocs
+    mkdocs_path: mkdocs
     use_title: true
     use_chapters: true
     mkdocs.yml:
@@ -66,7 +66,7 @@ backend_config:
       site_author: John Smith
 ```
 
-`binary_path`
+`mkdocs_path`
 :   Path to the MkDocs executable. By default, `mkdocs` command is run, which implies it's somewhere in your `PATH`.
 
 `use_title`

@@ -30,7 +30,7 @@ class Backend(BaseBackend):
         :param mkdocs_site_path: Path to the output directory for the site
         '''
 
-        components = [self._mkdocs_config.get('binary_path', 'mkdocs')]
+        components = [self._mkdocs_config.get('mkdocs_path', 'mkdocs')]
         components.append('build')
         components.append(f'-d {mkdocs_site_path}')
 
@@ -39,7 +39,7 @@ class Backend(BaseBackend):
     def _get_ghp_command(self) -> str:
         '''Generate ``mkdocs gh-deploy`` command to deploy the site to GitHub Pages.'''
 
-        components = [self._mkdocs_config.get('binary_path', 'mkdocs')]
+        components = [self._mkdocs_config.get('mkdocs_path', 'mkdocs')]
         components.append('gh-deploy')
 
         return ' '.join(components)
