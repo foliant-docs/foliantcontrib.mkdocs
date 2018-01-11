@@ -18,9 +18,9 @@ Convert Foliant project to MkDocs:
 
 ```bash
 $ foliant make mkdocs -p my-project
-✔ Parsing config
-✔ Applying preprocessor mkdocs
-✔ Making mkdocs with MkDocs
+v Parsing config
+v Applying preprocessor mkdocs
+v Making mkdocs with MkDocs
 ─────────────────────
 Result: My_Project-2017-12-04.mkdocs.src
 ```
@@ -29,9 +29,9 @@ Build a standalone website:
 
 ```bash
 $ foliant make site -p my-project
-✔ Parsing config
-✔ Applying preprocessor mkdocs
-✔ Making site with MkDocs
+v Parsing config
+v Applying preprocessor mkdocs
+v Making site with MkDocs
 ─────────────────────
 Result: My_Project-2017-12-04.mkdocs
 ```
@@ -40,9 +40,9 @@ Deploy to GitHub Pages:
 
 ```bash
 $ foliant make ghp -p my-project
-✔ Parsing config
-✔ Applying preprocessor mkdocs
-✔ Making ghp with MkDocs
+v Parsing config
+v Applying preprocessor mkdocs
+v Making ghp with MkDocs
 ─────────────────────
 Result: https://account-name.github.io/my-project/
 ```
