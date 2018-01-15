@@ -18,7 +18,7 @@ setup(
     version='1.0.1',
     author='Konstantin Molchanov',
     author_email='moigagoo@live.com',
-    url='https://github.com/foliant-docs/foliantcontrib',
+    url='https://github.com/foliant-docs/foliantcontrib.mkdocs',
     packages=['foliant.backends', 'foliant.preprocessors'],
     license='MIT',
     platforms='any',
