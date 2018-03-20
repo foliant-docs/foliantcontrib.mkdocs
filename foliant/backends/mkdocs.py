@@ -18,7 +18,15 @@ class Backend(BaseBackend):
         super().__init__(*args, **kwargs)
 
         self._mkdocs_config = self.config.get('backend_config', {}).get('mkdocs', {})
-        self._mkdocs_site_dir_name = f'{self.get_slug()}.mkdocs'
+
+        custom_slug = self._mkdocs_config.get('custom_slug', None)
+
+        if custom_slug:
+            self._mkdocs_site_dir_name = f'{custom_slug}.mkdocs'
+
+        else:
+            self._mkdocs_site_dir_name = f'{self.get_slug()}.mkdocs'
+
         self._mkdocs_project_dir_name = f'{self._mkdocs_site_dir_name}.src'
 
         self.required_preprocessors_after = {
