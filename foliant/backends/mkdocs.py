@@ -19,13 +19,7 @@ class Backend(BaseBackend):
 
         self._mkdocs_config = self.config.get('backend_config', {}).get('mkdocs', {})
 
-        overridden_slug = self._mkdocs_config.get('slug', None)
-
-        if overridden_slug:
-            self._mkdocs_site_dir_name = f'{overridden_slug}.mkdocs'
-
-        else:
-            self._mkdocs_site_dir_name = f'{self.get_slug()}.mkdocs'
+        self._mkdocs_site_dir_name = f'{self._mkdocs_config.get("slug", self.get_slug())}.mkdocs'
 
         self._mkdocs_project_dir_name = f'{self._mkdocs_site_dir_name}.src'
 
@@ -89,28 +83,28 @@ class Backend(BaseBackend):
         returns: Updated dictionary
         '''
 
-        def _sub(data_object, parent_is_dict):
-            if isinstance(data_object, dict):
-                new_data_object = {}
-                for key, value in data_object.items():
-                    new_data_object[key] = _sub(value, True)
+        def _sub(pages_component, parent_is_dict):
+            if isinstance(pages_component, dict):
+                new_pages_component = {}
+                for key, value in pages_component.items():
+                    new_pages_component[key] = _sub(value, True)
 
-            elif isinstance(data_object, list):
-                new_data_object = []
-                for item in data_object:
-                    new_data_object.append(_sub(item, False))
+            elif isinstance(pages_component, list):
+                new_pages_component = []
+                for item in pages_component:
+                    new_pages_component.append(_sub(item, False))
 
-            elif isinstance(data_object, str):
+            elif isinstance(pages_component, str):
                 if parent_is_dict == False:
-                    new_data_object = self._get_page_with_optional_heading(data_object)
+                    new_pages_component = self._get_page_with_optional_heading(pages_component)
 
                 else:
-                    new_data_object = data_object
+                    new_pages_component = pages_component
 
             else:
-                new_data_object = data_object
+                new_pages_component = pages_component
 
-            return new_data_object
+            return new_pages_component
 
         new_pages = _sub(pages, False)
 
