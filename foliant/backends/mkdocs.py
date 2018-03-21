@@ -19,10 +19,10 @@ class Backend(BaseBackend):
 
         self._mkdocs_config = self.config.get('backend_config', {}).get('mkdocs', {})
 
-        custom_slug = self._mkdocs_config.get('custom_slug', None)
+        overridden_slug = self._mkdocs_config.get('slug', None)
 
-        if custom_slug:
-            self._mkdocs_site_dir_name = f'{custom_slug}.mkdocs'
+        if overridden_slug:
+            self._mkdocs_site_dir_name = f'{overridden_slug}.mkdocs'
 
         else:
             self._mkdocs_site_dir_name = f'{self.get_slug()}.mkdocs'
