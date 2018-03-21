@@ -1,5 +1,8 @@
+import re
+
 from shutil import rmtree, copytree
 from pathlib import Path
+from typing import Dict
 from subprocess import run, PIPE, STDOUT, CalledProcessError
 
 from yaml import dump
@@ -15,7 +18,9 @@ class Backend(BaseBackend):
         super().__init__(*args, **kwargs)
 
         self._mkdocs_config = self.config.get('backend_config', {}).get('mkdocs', {})
-        self._mkdocs_site_dir_name = f'{self.get_slug()}.mkdocs'
+
+        self._mkdocs_site_dir_name = f'{self._mkdocs_config.get("slug", self.get_slug())}.mkdocs'
+
         self._mkdocs_project_dir_name = f'{self._mkdocs_site_dir_name}.src'
 
         self.required_preprocessors_after = {
@@ -44,6 +49,67 @@ class Backend(BaseBackend):
 
         return ' '.join(components)
 
+    def _get_page_with_optional_heading(self, page_file_path: str) -> str or Dict:
+        '''Get the content of first heading of source Markdown file, if the file
+        contains any headings. Return a data element of ``pages`` section
+        of ``mkdocs.yml`` file.
+
+        :param page_file_path: path to source Markdown file
+
+        :returns: Unchanged file path or a dictionary: content of first heading, file path
+        '''
+
+        is_path_to_markdown_file = re.match("^\S+\.md$", page_file_path)
+
+        if is_path_to_markdown_file:
+            page_file_full_path = self.project_path / self.config['src_dir'] / page_file_path
+
+            with open(page_file_full_path, encoding='utf8') as page_file:
+                content = page_file.read()
+                headings_found = re.search("^#+\s+(.+)$", content, flags=re.MULTILINE)
+
+                if headings_found:
+                    first_heading = headings_found.group(1)
+                    return {first_heading: page_file_path}
+
+        return page_file_path
+
+    def _get_pages_with_headings(self, pages: Dict) -> Dict:
+        '''Update ``pages`` section of ``mkdocs.yml`` file with the content
+        of top-level headings of source Markdown files.
+
+        param pages: Dictionary with the data of ``pages`` section
+
+        returns: Updated dictionary
+        '''
+
+        def _sub(pages_component, parent_is_dict):
+            if isinstance(pages_component, dict):
+                new_pages_component = {}
+                for key, value in pages_component.items():
+                    new_pages_component[key] = _sub(value, True)
+
+            elif isinstance(pages_component, list):
+                new_pages_component = []
+                for item in pages_component:
+                    new_pages_component.append(_sub(item, False))
+
+            elif isinstance(pages_component, str):
+                if parent_is_dict == False:
+                    new_pages_component = self._get_page_with_optional_heading(pages_component)
+
+                else:
+                    new_pages_component = pages_component
+
+            else:
+                new_pages_component = pages_component
+
+            return new_pages_component
+
+        new_pages = _sub(pages, False)
+
+        return new_pages
+
     def make(self, target: str) -> str:
         with spinner(f'Making {target} with MkDocs', self.quiet):
             try:
@@ -56,6 +122,9 @@ class Backend(BaseBackend):
 
                 if 'pages' not in config and self._mkdocs_config.get('use_chapters', True):
                     config['pages'] = self.config['chapters']
+
+                if self._mkdocs_config.get('use_headings', True):
+                    config['pages'] = self._get_pages_with_headings(config['pages'])
 
                 with open(mkdocs_project_path/'mkdocs.yml', 'w', encoding='utf8') as mkdocs_config:
                     dump(

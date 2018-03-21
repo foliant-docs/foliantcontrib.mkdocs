@@ -15,7 +15,7 @@ setup(
     name='foliantcontrib.mkdocs',
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    version='1.0.1',
+    version='1.0.2',
     author='Konstantin Molchanov',
     author_email='moigagoo@live.com',
     url='https://github.com/foliant-docs/foliantcontrib.mkdocs',
