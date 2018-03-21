@@ -15,6 +15,7 @@ setup(
     name='foliantcontrib.mkdocs',
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/markdown',
     version='1.0.2',
     author='Konstantin Molchanov',
     author_email='moigagoo@live.com',
