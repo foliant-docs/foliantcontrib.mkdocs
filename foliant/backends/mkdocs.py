@@ -56,6 +56,15 @@ class Backend(BaseBackend):
         return ' '.join(components)
 
     def _get_page_with_optional_heading(self, page_file_path: str) -> str or Dict:
+        '''Get the content of first heading of source Markdown file, if the file
+        contains any headings. Return a data element of ``pages`` section
+        of ``mkdocs.yml`` file.
+
+        :param page_file_path: path to source Markdown file
+
+        :returns: Unchanged file path or a dictionary: content of first heading, file path
+        '''
+
         is_path_to_markdown_file = re.match("^\S+\.md$", page_file_path)
 
         if is_path_to_markdown_file:
@@ -72,6 +81,13 @@ class Backend(BaseBackend):
         return page_file_path
 
     def _get_pages_with_headings(self, pages: Dict) -> Dict:
+        '''Update ``pages`` section of ``mkdocs.yml`` file with the content
+        of top-level headings of source Markdown files.
+
+        param pages: Dictionary with the data of ``pages`` section
+
+        returns: Updated dictionary
+        '''
 
         def _sub(data_object, parent_is_dict):
             if isinstance(data_object, dict):

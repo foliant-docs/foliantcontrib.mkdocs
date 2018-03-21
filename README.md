@@ -58,8 +58,10 @@ To customize the output, use options in `backend_config.mkdocs` section:
 backend_config:
   mkdocs:
     mkdocs_path: mkdocs
+    slug: my_awesome_project
     use_title: true
     use_chapters: true
+    use_headings: true
     mkdocs.yml:
       site_name: Custom Title
       site_url: http://example.com
@@ -68,6 +70,9 @@ backend_config:
 
 `mkdocs_path`
 :   Path to the MkDocs executable. By default, `mkdocs` command is run, which implies it's somewhere in your `PATH`.
+
+`slug`
+:   Result directory name without suffix (e.g. `.mkdocs`). Overrides top-level config option `slug`.
 
 `use_title`
 :   If `true`, use `title` value from `foliant.yml` as `site_name` in `mkdocs.yml`. It this case, you don't have to specify `site_name` in `mkdocs.yml` section. If you do, the value from `mkdocs.yml` section has higher priority.
@@ -78,6 +83,9 @@ backend_config:
 
 `use_chapters`
 :   Similar to `use_title`, but for `pages`. If `true`, `chapters` value from `foliant.yml` is used as `pages` in `mkdocs.yml`.
+
+`use_headings`
+:   If `true`, the resulting data of `pages` section in `mkdocs.yml` will be updated with the content of top-level headings of source Markdown files.
 
 `mkdocs.yml`
 :   Params to be copied into `mkdocs.yml` file. The params are passed “as is,” so you should consult with the [MkDocs configuration docs](http://www.mkdocs.org/user-guide/configuration/).
