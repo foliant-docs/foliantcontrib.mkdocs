@@ -10,7 +10,7 @@ from foliant.preprocessors.base import BasePreprocessor
 class Preprocessor(BasePreprocessor):
     defaults = {'mkdocs_project_dir_name': 'mkdocs'}
 
-    _image_pattern = re.compile(r'\!\[(?P<caption>.*)\]\((?P<path>.+)\)')
+    _image_pattern = re.compile(r'\!\[(?P<caption>.*)\]\((?P<path>((?!:\/\/).)+)\)')
 
     def _collect_images(self, content: str, md_file_path: Path) -> str:
         '''Find images outside the source directory, copy them into the source directory,
