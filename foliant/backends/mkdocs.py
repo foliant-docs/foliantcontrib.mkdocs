@@ -66,7 +66,7 @@ class Backend(BaseBackend):
 
             with open(page_file_full_path, encoding='utf8') as page_file:
                 content = page_file.read()
-                headings_found = re.search("^#+\s+(.+)$", content, flags=re.MULTILINE)
+                headings_found = re.search("^\s*#{1,6}[ \t]+([^\r\n]+?)(?:[ \t]+\{#\S+\})?\s*[\r\n]+", content)
 
                 if headings_found:
                     first_heading = headings_found.group(1)
