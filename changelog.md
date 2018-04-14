@@ -7,3 +7,8 @@
 
 -   Add `use_headings` and `slug` options for MkDocs backend.
 -   Fix inappropriate translation of image URLs into local paths in MkDocs preprocessor.
+
+
+# 1.0.3
+
+-   Update for Foliant 1.0.4: Pass logger to spinner.
