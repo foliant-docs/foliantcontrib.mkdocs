@@ -1,4 +1,4 @@
-import re
+from re import search
 
 from shutil import rmtree, copytree
 from pathlib import Path
@@ -29,6 +29,10 @@ class Backend(BaseBackend):
             }
         },
 
+        self.logger = self.logger.getChild('mkdocs')
+
+        self.logger.debug(f'Backend inited: {self.__dict__}')
+
     def _get_build_command(self, mkdocs_site_path: Path) -> str:
         '''Generate ``mkdocs build`` command to build the site.
 
@@ -39,7 +43,11 @@ class Backend(BaseBackend):
         components.append('build')
         components.append(f'-d {mkdocs_site_path}')
 
-        return ' '.join(components)
+        command = ' '.join(components)
+
+        self.logger.debug(f'Build command: {command}')
+
+        return command
 
     def _get_ghp_command(self) -> str:
         '''Generate ``mkdocs gh-deploy`` command to deploy the site to GitHub Pages.'''
@@ -47,7 +55,11 @@ class Backend(BaseBackend):
         components = [self._mkdocs_config.get('mkdocs_path', 'mkdocs')]
         components.append('gh-deploy')
 
-        return ' '.join(components)
+        command = ' '.join(components)
+
+        self.logger.debug(f'GHP upload command: {command}')
+
+        return command
 
     def _get_page_with_optional_heading(self, page_file_path: str) -> str or Dict:
         '''Get the content of first heading of source Markdown file, if the file
@@ -59,16 +71,24 @@ class Backend(BaseBackend):
         :returns: Unchanged file path or a dictionary: content of first heading, file path
         '''
 
+        self.logger.debug(f'Looking for the first heading in {page_file_path}')
+
         if page_file_path.endswith('.md'):
             page_file_full_path = self.project_path / self.config['src_dir'] / page_file_path
 
             with open(page_file_full_path, encoding='utf8') as page_file:
                 content = page_file.read()
-                headings_found = re.search("^\s*#{1,6}[ \t]+([^\r\n]+?)(?:[ \t]+\{#\S+\})?\s*[\r\n]+", content)
+                headings_found = search(
+                    r'^\s*#{1,6}[ \t]+([^\r\n]+?)(?:[ \t]+\{#\S+\})?\s*[\r\n]+',
+                    content
+                )
 
                 if headings_found:
                     first_heading = headings_found.group(1)
+                    self.logger.debug(f'Heading found: {first_heading}')
                     return {first_heading: page_file_path}
+
+        self.logger.debug(f'No heading found, returning original file path.')
 
         return page_file_path
 
@@ -106,6 +126,8 @@ class Backend(BaseBackend):
 
         new_pages = _recursive_process_pages(pages, False)
 
+        self.logger.debug(f'All pages with their headings: {new_pages}')
+
         return new_pages
 
     def make(self, target: str) -> str:
@@ -114,6 +136,8 @@ class Backend(BaseBackend):
                 mkdocs_project_path = self.working_dir / self._mkdocs_project_dir_name
 
                 config = self._mkdocs_config.get('mkdocs.yml', {})
+
+                self.logger.debug(f'Backend config: {config}')
 
                 if 'site_name' not in config and self._mkdocs_config.get('use_title', True):
                     config['site_name'] = self.config['title']
@@ -124,7 +148,10 @@ class Backend(BaseBackend):
                 if self._mkdocs_config.get('use_headings', True):
                     config['pages'] = self._get_pages_with_headings(config['pages'])
 
+                self.logger.debug(f'mkdocs.yml: {config}')
+
                 with open(mkdocs_project_path/'mkdocs.yml', 'w', encoding='utf8') as mkdocs_config:
+                    self.logger.debug(f'Saving mkdocs.yml into {mkdocs_project_path}')
                     dump(
                         config,
                         mkdocs_config,
