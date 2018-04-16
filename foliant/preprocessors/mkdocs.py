@@ -24,12 +24,17 @@ class Preprocessor(BasePreprocessor):
         :returns: Markdown content with image paths pointing within the source directory
         '''
 
+        self.logger.debug(f'Looking for images in {md_file_path}.')
 
         def _sub(image):
             image_caption = image.group('caption')
-            image_path = md_file_path.parent / Path(image.group('path'))
+            image_path = (md_file_path.parent / Path(image.group('path'))).resolve()
 
-            if self.working_dir not in image_path.parents:
+            self.logger.debug(f'Detected image: caption="{image_caption}", path={image_path}')
+
+            if self.working_dir.resolve() not in image_path.parents:
+                self.logger.debug('Image outside source directory.')
+
                 self._collected_imgs_path.mkdir(exist_ok=True)
 
                 collected_img_path = (
@@ -38,12 +43,19 @@ class Preprocessor(BasePreprocessor):
 
                 copy(image_path, collected_img_path)
 
+                self.logger.debug(f'Image copied to {collected_img_path}')
+
                 rel_img_path = Path(relpath(collected_img_path, md_file_path.parent)).as_posix()
 
             else:
+                self.logger.debug('Image inside source directory.')
                 rel_img_path = Path(relpath(image_path, md_file_path.parent)).as_posix()
 
-            return f'![{image_caption}]({rel_img_path})'
+            img_ref = f'![{image_caption}]({rel_img_path})'
+
+            self.logger.debug(f'Replacing with: {img_ref}')
+
+            return img_ref
 
         return self._image_pattern.sub(_sub, content)
 
@@ -52,6 +64,10 @@ class Preprocessor(BasePreprocessor):
         super().__init__(*args, **kwargs)
 
         self._collected_imgs_path = self.working_dir / f'_img_{str(uuid1())}'
+
+        self.logger = self.logger.getChild('mkdocs')
+
+        self.logger.debug(f'Preprocessor inited: {self.__dict__}')
 
     def apply(self):
         for markdown_file_path in self.working_dir.rglob('*.md'):
@@ -72,3 +88,5 @@ class Preprocessor(BasePreprocessor):
                 move(str(item), str(mkdocs_src_path))
 
         move(str(mkdocs_tmp_project_path), str(mkdocs_project_path))
+
+        self.logger.debug(f'Moved {mkdocs_tmp_project_path} to {mkdocs_project_path}')
