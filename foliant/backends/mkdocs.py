@@ -105,6 +105,9 @@ class Backend(BaseBackend):
             if isinstance(pages_subset, dict):
                 new_pages_subset = {}
                 for key, value in pages_subset.items():
+                    if not key:
+                        key = self._mkdocs_config.get('default_subsection_title', '…')
+
                     new_pages_subset[key] = _recursive_process_pages(value, True)
 
             elif isinstance(pages_subset, list):
