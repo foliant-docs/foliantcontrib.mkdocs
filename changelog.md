@@ -1,3 +1,7 @@
+# 1.0.5
+
+-   Require MkDocs 1.0.4.
+
 # 1.0.4
 
 -   Provide customizable default names for untitled nested groups of chapters.
