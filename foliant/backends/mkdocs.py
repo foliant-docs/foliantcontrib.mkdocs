@@ -134,7 +134,7 @@ class Backend(BaseBackend):
         return new_pages
 
     def make(self, target: str) -> str:
-        with spinner(f'Making {target} with MkDocs', self.logger, self.quiet):
+        with spinner(f'Making {target} with MkDocs', self.logger, self.debug):
             try:
                 mkdocs_project_path = self.working_dir / self._mkdocs_project_dir_name
 

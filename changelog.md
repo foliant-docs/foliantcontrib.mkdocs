@@ -1,3 +1,7 @@
+# 1.0.6
+
+-   Provide compatibility with Foliant 1.0.7.
+
 # 1.0.5
 
 -   Require MkDocs 1.0.4.

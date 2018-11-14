@@ -73,8 +73,12 @@ class Preprocessor(BasePreprocessor):
         for markdown_file_path in self.working_dir.rglob('*.md'):
             with open(markdown_file_path, encoding='utf8') as markdown_file:
                 content = markdown_file.read()
-            with open(markdown_file_path, 'w', encoding='utf8') as markdown_file:
-                markdown_file.write(self._collect_images(content, markdown_file_path))
+
+            processed_content = self._collect_images(content, markdown_file_path)
+
+            if processed_content:
+                with open(markdown_file_path, 'w', encoding='utf8') as markdown_file:
+                    markdown_file.write(processed_content)
 
         mkdocs_project_path = self.working_dir / self.options['mkdocs_project_dir_name']
         mkdocs_tmp_project_path = self.working_dir / str(uuid1())
