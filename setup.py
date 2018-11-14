@@ -16,7 +16,7 @@ setup(
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
-    version='1.0.6',
+    version='1.0.7',
     author='Konstantin Molchanov',
     author_email='moigagoo@live.com',
     url='https://github.com/foliant-docs/foliantcontrib.mkdocs',
@@ -24,7 +24,7 @@ setup(
     license='MIT',
     platforms='any',
     install_requires=[
-        'foliant>=1.0.7',
+        'foliant>=1.0.8',
         'mkdocs>=1.0.4'
     ],
     classifiers=[
