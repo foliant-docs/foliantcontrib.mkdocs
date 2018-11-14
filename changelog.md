@@ -1,3 +1,7 @@
+# 1.0.7
+
+-   Provide compatibility with Foliant 1.0.8.
+
 # 1.0.6
 
 -   Provide compatibility with Foliant 1.0.7.

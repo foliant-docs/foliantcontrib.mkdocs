@@ -24,7 +24,7 @@ setup(
     license='MIT',
     platforms='any',
     install_requires=[
-        'foliant>=1.0.7',
+        'foliant>=1.0.8',
         'mkdocs>=1.0.4'
     ],
     classifiers=[
