@@ -1,3 +1,7 @@
+# 1.0.8
+
+-   Escape control characters (double quotation marks, dollar signs, backticks) that may be used in system shell commands.
+
 # 1.0.7
 
 -   Provide compatibility with Foliant 1.0.8.
