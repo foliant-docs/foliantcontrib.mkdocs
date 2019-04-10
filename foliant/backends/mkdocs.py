@@ -33,6 +33,19 @@ class Backend(BaseBackend):
 
         self.logger.debug(f'Backend inited: {self.__dict__}')
 
+    def _escape_control_characters(self, source_string: str) -> str:
+        '''Escape control characters such as double quotation mark, dollar sign, backtick
+        to use them in system shell commands.
+
+        :param source_string: String that contains control characters
+
+        :returns: String with control characters escaped by backslash
+        '''
+
+        escaped_string = source_string.replace('"', "\\\"").replace('$', "\\$").replace('`', "\\`")
+
+        return escaped_string
+
     def _get_build_command(self, mkdocs_site_path: Path) -> str:
         '''Generate ``mkdocs build`` command to build the site.
 
@@ -41,7 +54,7 @@ class Backend(BaseBackend):
 
         components = [self._mkdocs_config.get('mkdocs_path', 'mkdocs')]
         components.append('build')
-        components.append(f'-d {mkdocs_site_path}')
+        components.append(f'-d "{self._escape_control_characters(str(mkdocs_site_path))}"')
 
         command = ' '.join(components)
 
