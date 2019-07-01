@@ -89,7 +89,7 @@ backend_config:
 :   If `true`, the resulting data of `pages` section in `mkdocs.yml` will be updated with the content of top-level headings of source Markdown files.
 
 `default_subsection_title`
-:   Default title of a subsection, i.e. a group of nested chapters, in case the title is specified as an empty string. If `default_subsection_title` is not set in the config, `…` will be used.
+:   Default title of a subsection, i.e. a group of nested chapters, in case the title is specified as an empty string. If `default_subsection_title` is not set in the config, **…** will be used.
 
 `mkdocs.yml`
 :   Params to be copied into `mkdocs.yml` file. The params are passed “as is,” so you should consult with the [MkDocs configuration docs](http://www.mkdocs.org/user-guide/configuration/).
