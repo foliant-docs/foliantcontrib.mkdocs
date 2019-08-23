@@ -1,5 +1,4 @@
-from re import search
-
+import re
 from shutil import rmtree, copytree
 from pathlib import Path
 from typing import Dict
@@ -91,9 +90,11 @@ class Backend(BaseBackend):
 
             with open(page_file_full_path, encoding='utf8') as page_file:
                 content = page_file.read()
-                headings_found = search(
-                    r'^\s*#{1,6}[ \t]+([^\r\n]+?)(?:[ \t]+\{#\S+\})?\s*[\r\n]+',
-                    content
+
+                headings_found = re.search(
+                    r'^\#{1,6}\s+(.*\S+)(?:\s+\{\#\S+\})?\s*$',
+                    content,
+                    flags=re.MULTILINE
                 )
 
                 if headings_found:
