@@ -1,3 +1,7 @@
+# 1.0.9
+
+-   Allow the first heading to be located not in the beginning of a document.
+
 # 1.0.8
 
 -   Escape control characters (double quotation marks, dollar signs, backticks) that may be used in system shell commands.
