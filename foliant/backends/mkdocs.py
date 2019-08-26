@@ -92,7 +92,7 @@ class Backend(BaseBackend):
                 content = page_file.read()
 
                 headings_found = re.search(
-                    r'^\#{1,6}\s+(.*\S+)(?:\s+\{\#\S+\})?\s*$',
+                    r'^\#{1,6}\s+(.+?)(?:\s+\{\#\S+\})?\s*$',
                     content,
                     flags=re.MULTILINE
                 )
