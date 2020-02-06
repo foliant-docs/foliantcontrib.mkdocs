@@ -1,3 +1,7 @@
+# 1.0.11
+
+-   Get captions for pages from workingdir instead of src_dir
+
 # 1.0.10
 
 -   Fix pattern for heading detection.
