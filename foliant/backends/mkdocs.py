@@ -86,7 +86,8 @@ class Backend(BaseBackend):
         self.logger.debug(f'Looking for the first heading in {page_file_path}')
 
         if page_file_path.endswith('.md'):
-            page_file_full_path = self.project_path / self.config['src_dir'] / page_file_path
+            page_file_full_path = self.working_dir /\
+                self._mkdocs_project_dir_name / 'docs' / page_file_path
 
             with open(page_file_full_path, encoding='utf8') as page_file:
                 content = page_file.read()
