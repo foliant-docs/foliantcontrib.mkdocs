@@ -124,4 +124,4 @@ Unfortunately, nothing can be done about it, either on MkDocs's or Foliant's par
 
 ### Paragraphs Inside List Items Are Rendered on the Root Level
 
-Check if you use **four-space indentation**. [Python Markdown is stern about this point](https://pythonhosted.org/Markdown/index.html#differences).
+Check if you use **four-space indentation**. [Python Markdown is stern about this point](https://python-markdown.github.io/#differences).
