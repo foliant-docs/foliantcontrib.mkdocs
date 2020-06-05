@@ -1,4 +1,8 @@
+[![](https://img.shields.io/pypi/v/foliantcontrib.mkdocs.svg)](https://pypi.org/project/foliantcontrib.mkdocs/) [![](https://img.shields.io/github/v/tag/foliant-docs/foliantcontrib.mkdocs.svg?label=GitHub)](https://github.com/foliant-docs/foliantcontrib.mkdocs)
+
 # MkDocs Backend for Foliant
+
+![MkDocs site built with Foliant](img/mkdocs.png)
 
 MkDocs backend lets you build websites from Foliant projects using [MkDocs](https://mkdocs.org) static site generator.
 
