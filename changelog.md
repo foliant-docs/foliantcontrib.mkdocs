@@ -1,3 +1,7 @@
+# 1.0.12
+
+-   Do not re-raise an exception of the same type as raised, raise `RuntimeError` instead, it’s needed to avoid non-informative error messages.
+
 # 1.0.11
 
 -   Get captions for pages from workingdir instead of src_dir

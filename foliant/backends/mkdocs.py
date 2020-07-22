@@ -223,4 +223,4 @@ class Backend(BaseBackend):
                     raise ValueError(f'MkDocs cannot make {target}')
 
             except Exception as exception:
-                raise type(exception)(f'Build failed: {exception}')
+                raise RuntimeError(f'Build failed: {exception}')
