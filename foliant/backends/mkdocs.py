@@ -161,10 +161,10 @@ class Backend(BaseBackend):
                     config['site_name'] = self.config['title']
 
                 if 'pages' not in config and self._mkdocs_config.get('use_chapters', True):
-                    config['pages'] = self.config['chapters']
+                    config['nav'] = self.config['chapters']
 
                 if self._mkdocs_config.get('use_headings', True):
-                    config['pages'] = self._get_pages_with_headings(config['pages'])
+                    config['nav'] = self._get_pages_with_headings(config['nav'])
 
                 self.logger.debug(f'mkdocs.yml: {config}')
 
