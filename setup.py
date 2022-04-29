@@ -25,7 +25,7 @@ setup(
     platforms='any',
     install_requires=[
         'foliant>=1.0.8',
-        'mkdocs>=1.0.4'
+        'mkdocs>=1.3.0'
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
