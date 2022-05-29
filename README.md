@@ -4,7 +4,7 @@
 
 ![MkDocs site built with Foliant](https://raw.githubusercontent.com/foliant-docs/foliantcontrib.mkdocs/develop/img/mkdocs.png)
 
-MkDocs backend lets you build websites from Foliant projects using [MkDocs](https://mkdocs.org) static site generator.
+MkDocs backend lets you build websites from Foliant projects using [MkDocs](https://www.mkdocs.org/) static site generator.
 
 The backend adds three targets: `mkdocs`, `site`, and `ghp`. The first one converts a Foliant project into a MkDocs project without building any html files. The second one builds a standalone website. The last one deploys the website to GitHub Pages.
 

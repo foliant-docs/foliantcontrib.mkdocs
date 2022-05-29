@@ -1,3 +1,8 @@
+# 1.0.13
+
+- Update to mkdocs 1.3.0
+- Replaced `pages` to `nav` in config generation due to [github.com/mkdocs/mkdocs/pull/2652](https://github.com/mkdocs/mkdocs/pull/2652)
+
 # 1.0.12
 
 -   Do not re-raise an exception of the same type as raised, raise `RuntimeError` instead, it’s needed to avoid non-informative error messages.
