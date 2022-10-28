@@ -1,3 +1,7 @@
+# 1.0.14
+
+- Fix `_image_pattern` not to match image refs with brackets in captions
+
 # 1.0.13
 
 - Update to mkdocs 1.3.0
