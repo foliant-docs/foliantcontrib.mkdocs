@@ -1,3 +1,7 @@
+# 1.0.15
+
+- Raise error if mkdocs build failed but exited with status code 0
+
 # 1.0.14
 
 - Fix `_image_pattern` not to match image refs with brackets in captions

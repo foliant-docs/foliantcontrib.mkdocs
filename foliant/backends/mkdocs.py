@@ -185,7 +185,7 @@ class Backend(BaseBackend):
                 elif target == 'site':
                     try:
                         mkdocs_site_path = Path(self._mkdocs_site_dir_name).absolute()
-                        run(
+                        mkdocs_process = run(
                             self._get_build_command(mkdocs_site_path),
                             shell=True,
                             check=True,
@@ -193,6 +193,12 @@ class Backend(BaseBackend):
                             stderr=STDOUT,
                             cwd=mkdocs_project_path
                         )
+
+                        mkdocs_output = mkdocs_process.stdout.decode()
+                        success_build_marker = 'Documentation built in'
+
+                        if success_build_marker not in mkdocs_output:
+                            raise RuntimeError(f'MkDocs cannot make {target}\nmkdocs logs:\n {mkdocs_output}')
 
                         return self._mkdocs_site_dir_name
 
